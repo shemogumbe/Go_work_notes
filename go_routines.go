@@ -3,18 +3,19 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"sync"
 	"time"
 )
 
 func main() {
 	urls := []string{
 		"https://golang.org",
-		"https://ap.github.com",
+		"https://api.github.com",
 		"https://httpbin.org/ip",
 	}
 
 	start := time.Now()
-	siteSerial(urls)
+	siteConcurrentSerial(urls)
 	fmt.Println(time.Since(start))
 }
 
@@ -34,4 +35,16 @@ func siteSerial(urls []string) {
 	for _, url := range urls {
 		returnType(url)
 	}
+}
+
+func siteConcurrentSerial(urls []string) {
+	var wg sync.WaitGroup
+	for _, url := range urls {
+		wg.Add(1)
+		go func(url string) {
+			returnType(url)
+			wg.Done()
+		}(url)
+	}
+	wg.Wait()
 }
