@@ -5,25 +5,16 @@ import (
 )
 
 func main() {
-	var x int
-	var y int
+	n := 9
 
-	x = 51
-	y = 41
-
-	if x > y && x < 51 {
-		fmt.Printf("X is greater  but within range")
-
-	} else {
-		fmt.Printf("Y is greater than X")
-
-	}
-
-	a := 11.0
-	b := 20.0
-
-	if frac := a / b; frac > 0.5 {
-		// read as fraction is a/b and frac is greater than 0.5
-		fmt.Println("A is more than half of b")
+	switch n {
+	case 1:
+		fmt.Println("Selected - One")
+	case 2:
+		fmt.Println("Selected - Two")
+	case 3:
+		fmt.Println("Selected - Three")
+	default:
+		fmt.Printf("Selection - Out of range")
 	}
 }
