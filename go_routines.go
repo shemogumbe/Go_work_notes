@@ -15,6 +15,10 @@ func main() {
 	}
 
 	start := time.Now()
+	siteSerial(urls)
+	fmt.Println(time.Since(start))
+
+	start = time.Now()
 	siteConcurrentSerial(urls)
 	fmt.Println(time.Since(start))
 }
