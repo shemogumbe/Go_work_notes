@@ -23,6 +23,19 @@ type User struct {
 	Phone      string  `json:"phone"`
 	Age        int32   `json:"age"`
 	Weight     float64 `json:"weight"`
+	Adress     Adress  `json:"address"`
+}
+
+type Adress struct {
+	Address    string `json:"address"`
+	City       string `json:"city"`
+	PostalCode string `json:"postalCode"`
+	State      string `json:"state"`
+}
+
+type Coordinates struct {
+	Lat string `json:"lat"`
+	Lng string `json:"lng"`
 }
 
 func listUsersFromStructuredJson(c *gin.Context) {
@@ -38,15 +51,6 @@ func listUsersFromStructuredJson(c *gin.Context) {
 	json.Unmarshal(byteValue, &users)
 
 	c.IndentedJSON(http.StatusOK, users)
-}
-
-func main() {
-
-	router := gin.Default()
-	router.GET("users", listUsers)
-	router.GET("known_users", listUsersFromStructuredJson)
-
-	router.Run("localhost:8090")
 }
 
 func listUsers(c *gin.Context) {
@@ -70,4 +74,13 @@ func listUsers(c *gin.Context) {
 	json.Unmarshal([]byte(byteValue), &result)
 
 	c.IndentedJSON(http.StatusOK, result["users"])
+}
+
+func main() {
+
+	router := gin.Default()
+	router.GET("users", listUsers)
+	router.GET("known_users", listUsersFromStructuredJson)
+
+	router.Run("localhost:8090")
 }
