@@ -25,13 +25,26 @@ type User struct {
 	Weight     float64 `json:"weight"`
 }
 
+func listUsersFromStructuredJson(c *gin.Context) {
+	josnFile, err := os.Open("users.json")
+
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer josnFile.Close()
+	byteValue, _ := ioutil.ReadAll(josnFile)
+	var users Users
+
+	json.Unmarshal(byteValue, &users)
+
+	c.IndentedJSON(http.StatusOK, users)
+}
+
 func main() {
 
-	// for i := 0; i < len(users.Users); i++ {
-	// 	fmt.Println("User FirstName" + users.Users[i].FirstName)
-	// }
 	router := gin.Default()
 	router.GET("users", listUsers)
+	router.GET("known_users", listUsersFromStructuredJson)
 
 	router.Run("localhost:8090")
 }
